@@ -1,13 +1,19 @@
-
 @keyframes animateSvg {
-    to{
-        transform: translate(-50%,-10px);
-    }
+  to {
+    transform: translate(-50%, -10px);
+  }
 }
-
 
 @keyframes upanddown {
-    to{
-        transform: translateY(-5px);
-    }
+  to {
+    transform: translateY(-5px);
+  }
 }
+
+@keyframes ContactFormImg {
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+

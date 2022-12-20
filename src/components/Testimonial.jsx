@@ -1,12 +1,17 @@
 import React from "react";
 
+
+
+//
 const Testimonial = () => {
   return (
     <div id="testimonial">
       <h2>Testimonial</h2>
 
       <section>
-        <TestimonialCard name={"Mofijul"} feedback={"Xyz"} />
+        <TestimonialCard name={"Hamza"} feedback={"Amazing design and development"} />
+        <TestimonialCard name={"Andrew"} feedback={"Amazing design and development"} />
+        <TestimonialCard name={"Mark"} feedback={"Amazing design and development"} />
       </section>
     </div>
   );
