@@ -2,29 +2,46 @@ import React, { useState } from "react";
 import imgContact from ".././assets/1__2_-removebg-preview.png";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import {addDoc,collection} from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../Firebase";
 
-
-
 const Contact = () => {
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [disableBtn, setDisableBtn] = useState(false);
 
-  const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const changeHandler = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-    console.log(inputs);
-  };
-  const submitHandler = (e) => {
+  // const [inputs, setInputs] = useState({
+  //   name: "",
+  //   email: "",
+  //   message: "",
+  // });
+  // const changeHandler = (e) => {
+  //   setInputs({ ...inputs, [e.target.name]: e.target.value });
+  //   console.log(inputs);
+  // };
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    toast.success("Message Sent");
+    // console.log(name, email, message);
+    setDisableBtn(true);
+
+    try {
+      await addDoc(collection(db, "contacts"), {
+        name,
+        email,
+        message,
+      });
+      setName("");
+      setEmail("");
+      setMessage("");
+
+      toast.success("Message Sent");
+      setDisableBtn(false);
+    } catch (error) {
+      toast.error("Error");
+      console.log(error);
+      setDisableBtn(false);
+    }
   };
 
   const animationsInForm = {
@@ -45,12 +62,12 @@ const Contact = () => {
         opacity: 0,
       },
       whileInView: {
-        y: 0,
+        x: 0,
         opacity: 1,
       },
-      transition:{
-        delay:0.5,
-      }
+      transition: {
+        delay: 0.5,
+      },
     },
   };
   return (
@@ -61,28 +78,35 @@ const Contact = () => {
           <input
             type="text"
             placeholder="Your Name"
-            name="name"
-            value={inputs.name}
-            onChange={changeHandler}
+            // name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
           <input
             type="email"
             placeholder="Your Email"
             name="email"
-            value={inputs.email}
-            onChange={changeHandler}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="text"
             placeholder="Your Message"
             name="message"
-            value={inputs.message}
-            onChange={changeHandler}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             required
           />
-          <motion.button type="submit"  {...animationsInForm.button}>Send</motion.button>
+          <motion.button
+            className={disableBtn ? "disableBtn" : ""}
+            type="submit"
+            disabled={disableBtn}
+            {...animationsInForm.button}
+          >
+            Send
+          </motion.button>
         </motion.form>
       </section>
       <aside>
