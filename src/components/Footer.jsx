@@ -1,10 +1,11 @@
 import React from "react";
-import FooterImg from "../assets/logo.png";
+import FooterImg from "../assets/image.jpg";
 import {
   AiFillGithub,
   AiFillInstagram,
   AiFillYoutube,
   AiOutlineArrowDown,
+  AiOutlineArrowUp,
 } from "react-icons/ai";
 
 const Footer = () => {
@@ -34,7 +35,7 @@ const Footer = () => {
           </article>
         </aside>
         <a href="#home">
-          <AiOutlineArrowDown />
+          <AiOutlineArrowUp />
         </a>
       </footer>
     </>

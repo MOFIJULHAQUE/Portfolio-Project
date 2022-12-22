@@ -1,31 +1,62 @@
 import React, { useState } from "react";
 import imgContact from ".././assets/1__2_-removebg-preview.png";
-import {toast} from "react-hot-toast"
+import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
+import {addDoc,collection} from "firebase/firestore"
+import { db } from "../Firebase";
+
+
 
 const Contact = () => {
   // const [name, setName] = useState("");
   // const [email, setEmail] = useState("");
   // const [message, setMessage] = useState("");
 
-  const [ inputs,setInputs] =useState({
-    name:"",
-    email:"",
-    message :"",
-  })
-  const changeHandler=(e)=>{
-    setInputs({...inputs,[e.target.name]:e.target.value});
+  const [inputs, setInputs] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const changeHandler = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
     console.log(inputs);
-
-  }
+  };
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(inputs);
-    toast.success("Message Sent")
+    toast.success("Message Sent");
+  };
+
+  const animationsInForm = {
+    form: {
+      initial: {
+        x: "-100%",
+        opacity: 0,
+      },
+      whileInView: {
+        x: 0,
+        opacity: 1,
+      },
+    },
+
+    button: {
+      initial: {
+        y: "-100%",
+        opacity: 0,
+      },
+      whileInView: {
+        y: 0,
+        opacity: 1,
+      },
+      transition:{
+        delay:0.5,
+      }
+    },
   };
   return (
     <div id="contact">
       <section>
-        <form onSubmit={submitHandler}>
+        <motion.form onSubmit={submitHandler} {...animationsInForm.form}>
           <h2>Contact Me</h2>
           <input
             type="text"
@@ -51,8 +82,8 @@ const Contact = () => {
             onChange={changeHandler}
             required
           />
-          <button type="submit">Send</button>
-        </form>
+          <motion.button type="submit"  {...animationsInForm.button}>Send</motion.button>
+        </motion.form>
       </section>
       <aside>
         <img src={imgContact} alt="Contact" />
